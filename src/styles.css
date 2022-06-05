@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.mostrar{
+    display: block;
+
+}
+.ocultar{
+    display: none;
+}
+.btnActual{
+    background-color: #7c0505;
+}

@@ -1,0 +1,22 @@
+{
+    "name": "georg/tdaw",
+    "description": "php8, tailwind, mvc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./",
+            "Controllers\\" : "./controllers",
+            "Models\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jorge Merlin",
+            "email": "jjimenezm1703@alumno.ipn.mx"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}
