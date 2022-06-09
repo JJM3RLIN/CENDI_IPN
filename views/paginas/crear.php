@@ -340,7 +340,6 @@
           <label class="text-gray-600 font-semibold text-lg" for="imgDerecho">Foto del DerechoHabiente</label>
           <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgDerecho" name="fotoDerecho">
       </div>
-    <button type="submit">Subir fotos</button>
   </form>
 </section>
 

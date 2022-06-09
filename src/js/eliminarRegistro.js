@@ -17,6 +17,9 @@ try {
         body: form
     } );
     const respuesta = await resultado.json();
+    if(respuesta.respuestaB == '1'){
+        alertaTop('Se elimino correctamente al derechoHabiente', 'success');
+    }
     
 } catch (error) {
     console.log(error)

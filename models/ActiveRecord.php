@@ -70,7 +70,6 @@ class ActiveRecord
         $query.= "foto='";
         $query.= $imagen;
         $query.= "' WHERE " . $SentenciaCurp; 
-        echo $query;
         $resultado = self::$db->query($query);
     
        return $resultado;
@@ -84,9 +83,9 @@ class ActiveRecord
         return $resultado;
     }
 
-    public function some ($id){
-      $query = 'SELECT * FROM ' . static::$tabla . " WHERE curp = '" . $this->curp . "' ";
-       $resultado = self::crearObjeto($query);
+    public function some ($sentencia){
+      $query = 'SELECT * FROM ' . static::$tabla . " WHERE " . $sentencia;
+      $resultado = self::consultaSQL($query);
        return $resultado;
     }
     //Actualizar un registro
@@ -110,8 +109,7 @@ class ActiveRecord
     //Eliminar un registro
     public  function delete($sentencia)
     {
-        $id = $this->id;
-        $query = 'DELETE FROM' . ' ' . static::$tabla . " WHERE  " . self::$db->escape_string($sentencia);
+        $query = 'DELETE FROM' . ' ' . static::$tabla . " WHERE  " . $sentencia;
         $resultado = self::$db->query($query);
         return $resultado;
     }
@@ -138,7 +136,7 @@ $resultado->free();
     public static function crearObjeto($registro)
     {
 
-        //var_dump($registro);
+        
         //Creamos un objeto de la clase que onvoca, por eso static
         $objeto = new static;
         foreach($registro as $key => $value){

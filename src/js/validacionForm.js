@@ -101,7 +101,7 @@ function guardarInfoChild() {
   boletaF.addEventListener("change", (e) => {
     const regexBoleta = /[PP | PE | 2021][0-9]{8}/;
     if (!regexBoleta.test(e.target.value)) {
-      mostrarAlerta(
+      mostrarAlertErrorCampo(
         "Formato invalido de la boleta",
         e.target.parentElement.parentElement.parentElement
       );
@@ -118,7 +118,7 @@ function guardarInfoChild() {
   });
   nombreF.addEventListener("change", (e) => {
     if (validarTexto(e.target.value)) {
-      mostrarAlerta("No debe contener números", e.target.parentElement);
+      mostrarAlertErrorCampo("No debe contener números", e.target.parentElement);
     } else {
       childDatos.nombreC = e.target.value;
       resumen.nombreC = e.target.value;
@@ -126,7 +126,7 @@ function guardarInfoChild() {
   });
   apellidoMF.addEventListener("change", (e) => {
     if (validarTexto(e.target.value)) {
-      mostrarAlerta(
+      mostrarAlertErrorCampo(
         "No debe contener números",
         e.target.parentElement.parentElement.parentElement
       );
@@ -137,7 +137,7 @@ function guardarInfoChild() {
   });
   apellidoPF.addEventListener("change", (e) => {
     if (validarTexto(e.target.value)) {
-      mostrarAlerta(
+      mostrarAlertErrorCampo(
         "No debe contener números",
         e.target.parentElement.parentElement.parentElement
       );
@@ -156,7 +156,7 @@ function guardarInfoChild() {
   });
   curpF.addEventListener("change", (e) => {
     if (!validarCurp(e.target.value)) {
-      mostrarAlerta("El formato del CURP es invalido", e.target.parentElement);
+      mostrarAlertErrorCampo("El formato del CURP es invalido", e.target.parentElement);
     } else {
       childDatos.curpC = e.target.value;
       resumen.curpC = e.target.value;
@@ -185,7 +185,7 @@ function guardarInfoDerecho() {
   const extension = document.querySelector("#extencionDE");
   apellidoP.addEventListener("change", (e) => {
     if (validarTexto(e.target.value)) {
-      mostrarAlerta(
+      mostrarAlertErrorCampo(
         "Apellido no valido",
         e.target.parentElement.parentElement.parentElement
       );
@@ -196,7 +196,7 @@ function guardarInfoDerecho() {
   });
   apellidoM.addEventListener("change", (e) => {
     if (validarTexto(e.target.value)) {
-      mostrarAlerta(
+      mostrarAlertErrorCampo(
         "Apellido no valido",
         e.target.parentElement.parentElement.parentElement
       );
@@ -247,7 +247,7 @@ function guardarInfoDerecho() {
   });
   curp.addEventListener("change", (e) => {
     if (!validarCurp(e.target.value)) {
-      mostrarAlerta("Formato de CURP no valido", e.target.parentElement);
+      mostrarAlertErrorCampo("Formato de CURP no valido", e.target.parentElement);
     } else {
       derechoHabienteDatos.curp = e.target.value;
       childDatos.curpD = e.target.value;
@@ -293,7 +293,7 @@ function guardarInfoConyugue(){
   //Validar Campos
   nombre.addEventListener('change', e =>{
     if (validarTexto(e.target.value)) {
-      mostrarAlerta("El nombre no debe contener números", e.target.parentElement);
+      mostrarAlertErrorCampo("El nombre no debe contener números", e.target.parentElement);
     } else {
       conyuDatos.nombreCO = e.target.value;
       resumen.nombreCO = e.target.value;
@@ -301,7 +301,7 @@ function guardarInfoConyugue(){
   });
   apellidoM.addEventListener('change', e =>{
     if (validarTexto(e.target.value)) {
-      mostrarAlerta("El apellido no debe contener números", e.target.parentElement);
+      mostrarAlertErrorCampo("El apellido no debe contener números", e.target.parentElement);
     } else {
       conyuDatos.apellidoMCO = e.target.value;
       resumen.apellidoMCO = e.target.value;
@@ -310,7 +310,7 @@ function guardarInfoConyugue(){
 
   apellidoP.addEventListener('change', e =>{
     if (validarTexto(e.target.value)) {
-      mostrarAlerta("El apellido no debe contener números", e.target.parentElement);
+      mostrarAlertErrorCampo("El apellido no debe contener números", e.target.parentElement);
     } else {
       conyuDatos.apellidoPCO = e.target.value;
       resumen.apellidoPCO = e.target.value;
@@ -553,7 +553,7 @@ function validarTexto(txt) {
   const regex = /[0-9]/;
   return regex.test(txt);
 }
-function mostrarAlerta(mensaje, padre) {
+function mostrarAlertErrorCampo(mensaje, padre) {
   const divAlerta = document.createElement("P");
   divAlerta.textContent = mensaje.toUpperCase();
   divAlerta.classList.add("error");

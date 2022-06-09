@@ -24,34 +24,6 @@ class RegistroController
         $router->render('paginas/crear');
     }
 
-    public static function registrar()
-    {
-
-        //$child = new Child;
-        //$conyugue = new Conyu;
-        //$derechoHabiente = new Derechohabiente;
-
-        /*
-        $child = new Child($_POST["child"]);
-        $conyugue = new Conyu($_POST["conyugue"]);
-        $derechoHabiente = new Derechohabiente($_POST["derechoH"]);
-             
-        $errores[]['child'] = $child->errores();
-        $errores[]['conyugue'] = $conyugue->errores();
-        $errores[]['derechoHabiente'] = $derechoHabiente->errores();
-        
-         if(empty($errores)){
-              
-             //Creamos el PDF
-             $pdf = new Pdf($child, 'otracosa');
-             $pdf->crearPdf();
-             //Enviamos el Email
-             $mail = new Email($derechoHabiente->correo, $derechoHabiente->nombre);
-             $mail->enviarPdf();
-              
-         }
-        */
-    }
     public static  function guardar()
     {
         
@@ -106,10 +78,10 @@ class RegistroController
         //Obtenemos las imagenes
         $imagenDerecho = $_FILES['fotoDerecho'];
         $imagenChild =$_FILES['fotoChild'];
-        $imagenCon =$_FILES['fotoCon'] ?? '';
+        $imagenCon =$_FILES['fotoCon'] ?? [];
     
 
-        //Guardar imagenes
+        //Sentencias para la bd
       $sentencia = "curpD='" . $curpD ."'";
       $sentenciaDerecho = "curp='" . $curpD ."'";
       $carpeta = '../fotos/';
@@ -121,14 +93,39 @@ class RegistroController
       move_uploaded_file($imagenDerecho['tmp_name'], $carpeta . $fotoDerecho);
       move_uploaded_file($imagenChild['tmp_name'], $carpeta . $fotoChild);
 
-       $childBD->addImage($fotoChild, $sentencia) ;
+      //Guardamos las imagenes
+       $childBD->addImage($fotoChild, $sentencia);
        $derechoHabienteBD->addImage($fotoDerecho, $sentenciaDerecho);
-        //Crear pdf
 
+         //Seleccionamos la info para mostrar en el pdf
+        $childRegistro = $childBD->some($sentencia);
+        $derechoRegistro = $derechoHabienteBD->some($sentenciaDerecho);
 
-        //Enviar el correo
+         //En caso de que si exista el conyugue
+       if(!empty($imagenCon)){
+        $fotoCon = $curpD . "Con.jpg";
+        move_uploaded_file($imagenCon['tmp_name'], $carpeta . $fotoCon);
+        $conyugueBD->addImage($fotoCon, $sentencia) ;
+        $conyugueBD->some($sentencia);
 
-        //Redirigimos
+        //Crear pdf con el conyugue
+       $pdf = new Pdf($derechoRegistro, $childRegistro,  $conyugueBD);
+    }else{
+
+        //Crear pdf sin el conyugue
+       $pdf = new Pdf($derechoRegistro, $childRegistro);
+    }
+    //Guardamos el pdf en el servidor
+     $pdf->crearPdf();
+
+        //Envio de correo
+         //Enviamos el correo al que se va a enviar y el nombre de la persona
+         $mail = new Email($derechoRegistro[0]->correo, $derechoRegistro[0]->nombre, $childRegistro[0]->boleta);
+
+         //Se envia el correo
+         $mail->enviarPdf();
+
+        //Redirigimos y mandamos un mensaje de exito
         header('Location: /?tipo=1');
         
       

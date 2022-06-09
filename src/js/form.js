@@ -148,6 +148,10 @@ function mostrarConyugue(){
       }else{
         btnCon.classList.add('hidden');
         infoConyugue.classList.add('hidden');
+        const formFotos = document.querySelector('.formFotos');
+       const div = document.createElement('DIV');
+     div.innerHTML = `<button type="submit">Subir fotos</button>`;
+     formFotos.appendChild(div);
       }
       
     })
@@ -158,6 +162,8 @@ function mostrarFotoConyugue(){
   const formFotos = document.querySelector('.formFotos');
   const div = document.createElement('DIV');
   div.innerHTML = ` <label class="text-gray-600 font-semibold text-lg" for="imgCon">Foto del Conyugue</label>
-  <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgCon" name="fotoCon">`;
+  <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgCon" name="fotoCon">
+  <button type="submit">Subir fotos</button>
+  `;
   formFotos.appendChild(div);
 }

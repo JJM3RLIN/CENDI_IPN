@@ -7,18 +7,19 @@ use FPDF;
 //se mandara a llamar cuando se le de al boton de generar pdf o registrar
 class Pdf 
 {
-    public $dato1;
-    public $dato2;
-    public $dato3;
+    public $derechoHabiente;
+    public $child;
+    public $conyugue;
 
- //Al crear el objeto  añadiremos la info que ira en el pdf
-public function __construct($dato, $dato2)
+ //Sin no se manda el conyugue su valor por default sera []
+public function __construct($dereBD, $childBD, $conyuBD = [])
 {
-    $this->dato1 = $dato;
-    $this->dato2 = $dato2;
+    $this->derechoHabiente = $dereBD[0];
+    $this->child = $childBD[0];
+    $this->conyugue = $conyuBD;
 }
   public function crearPdf(){
-    
+   
     $pdf = new FPDF();
     $pdf -> AddPage();
     $pdf->Image('../src/img/titulo.png',0,0,210,30);
@@ -42,86 +43,74 @@ public function __construct($dato, $dato2)
     $pdf->Cell(142);
     $pdf->Cell(16,5,'FOLIO:',1,0,'C');
     $pdf->SetFillColor(140,201,255);
-    $pdf->Cell(30,5,'',1,1,'C',1);
+    $pdf->Cell(30,5,  $this->child->boleta,1,1,'C',1);
+  
     $pdf->Cell(142);
     $pdf->Cell(16,5,'GRUPO:',1,0,'C');
     $pdf->SetFillColor(140,201,255);
-    $pdf->Cell(30,5,'',1,1,'C',1);
+    $pdf->Cell(30,5,$this->child->grupo,1,1,'C',1);
     $pdf->Ln(5);
     $pdf->Cell(23);
     $pdf ->SetFont('helvetica','B',11);
     $pdf->Cell(16,5,utf8_decode('DATOS DEL NIÑO O DE LA NIÑA:'),0,1,'C');
     $pdf->SetFillColor(140,201,255);
-    $pdf->Cell(62,5,'',1,0,'C',1);
-    $pdf->Cell(64,5,'',1,0,'C',1);
-    $pdf->Cell(62,5,'',1,1,'C',1);
+    $pdf->Cell(62,5,$this->child->apellidoP,1,0,'C',1);
+    $pdf->Cell(64,5,$this->child->apellidoM,1,0,'C',1);
+    $pdf->Cell(62,5,$this->child->nombre,1,1,'C',1);
     $pdf->Cell(62,5,'Primer apellido',1,0,'C');
     $pdf->Cell(64,5,'Segundo apellido',1,0,'C');
     $pdf->Cell(62,5,'Nombre(s)',1,1,'C');
     $pdf->Cell(44,5,'Fecha de nacimiento:',1,0,'C');
-    $pdf->Cell(9,5,utf8_decode('Día:'),1,0,'C');
-    $pdf->Cell(9,5,'',1,0,'C',1);
-    $pdf->Cell(12,5,'Mes:',1,0,'C');
-    $pdf->Cell(22,5,'',1,0,'C',1);
-    $pdf->Cell(10,5,utf8_decode('Año:'),1,0,'C');
-    $pdf->Cell(12,5,'',1,0,'C',1);
+    $pdf->Cell(9,5,utf8_decode('MES, día, año:'),1,0,'C');
+    $pdf->Cell(9,5,$this->child->fechaNacimiento,1,0,'C',1);
     $pdf->Cell(14,5,'Edad:',1,0,'C');
     $pdf->Cell(13,5,utf8_decode('Años:'),1,0,'C');
-    $pdf->Cell(16,5,'',1,0,'C',1);
-    $pdf->Cell(12,5,'Mes:',1,0,'C');
-    $pdf->Cell(15,5,'',1,1,'C',1);
+    $pdf->Cell(16,5,$this->child->edad,1,0,'C',1);
     $pdf->Cell(18,5,'CURP:',1,0,'C');
-    $pdf->Cell(64,5,'',1,1,'C',1);
+    $pdf->Cell(64,5,$this->child->curp,1,1,'C',1);
 
     $pdf->Ln(5);
     $pdf->Cell(23);
     $pdf ->SetFont('helvetica','B',11);
     $pdf->Cell(16,5,utf8_decode('DATOS DEL DERECHOHABIENTE:'),0,1,'C');
     $pdf->SetFillColor(140,201,255);
-    $pdf->Cell(62,5,'',1,0,'C',1);
-    $pdf->Cell(64,5,'',1,0,'C',1);
-    $pdf->Cell(62,5,'',1,1,'C',1);
+    $pdf->Cell(62,5,$this->derechoHabiente->apellidoP,1,0,'C',1);
+    $pdf->Cell(64,5,$this->derechoHabiente->apellidoM,1,0,'C',1);
+    $pdf->Cell(62,5,$this->derechoHabiente->nombre,1,1,'C',1);
     $pdf->Cell(62,5,'Primer apellido',1,0,'C');
     $pdf->Cell(64,5,'Segundo apellido',1,0,'C');
     $pdf->Cell(62,5,'Nombre(s)',1,1,'C');
     $pdf->Cell(24,5,'Domicilio ','LR',0,'C');
     $pdf->Cell(60,5,'',1,0,'C',1);
-    $pdf->Cell(23,5,'',1,0,'C',1);
-    $pdf->Cell(23,5,'',1,0,'C',1);
-    $pdf->Cell(58,5,'',1,1,'C',1);
     $pdf->Cell(24,5,'particular:','LB',0,'C');
-    $pdf->Cell(60,5,'Calle:',1,0,'C');
-    $pdf->Cell(23,5,utf8_decode('N° Ext.:'),1,0,'C');
-    $pdf->Cell(23,5,utf8_decode('N° Int.:'),1,0,'C');
-    $pdf->Cell(58,5,'Colonia:',1,1,'C');
-    $pdf->Cell(50,5,'',1,0,'C',1);
-    $pdf->Cell(56,5,'',1,0,'C',1);
-    $pdf->Cell(14,5,'',1,0,'C',1);
-    $pdf->Cell(34,5,'',1,0,'C',1);
-    $pdf->Cell(34,5,'',1,1,'C',1);
+    $pdf->Cell(50,5,$this->derechoHabiente->municipio,1,0,'C',1);
+    $pdf->Cell(56,5,$this->derechoHabiente->entidadFederativa,1,0,'C',1);
+    $pdf->Cell(14,5,$this->derechoHabiente->cp,1,0,'C',1);
+    $pdf->Cell(34,5,$this->derechoHabiente->tel_f,1,0,'C',1);
+    $pdf->Cell(34,5,$this->derechoHabiente->tel_c,1,1,'C',1);
     $pdf->Cell(50,5,'Alcaldia o Municipio:',1,0,'C');
     $pdf->Cell(56,5,'Entidad Federativa:',1,0,'C');
     $pdf->Cell(14,5,'C.P.:',1,0,'C');
     $pdf->Cell(34,5,utf8_decode('Teléfono fijo:'),1,0,'C');
     $pdf->Cell(34,5,utf8_decode('Teléfono celular:'),1,1,'C');
-    $pdf->Cell(70,5,'',1,0,'C',1);
-    $pdf->Cell(63,5,'',1,0,'C',1);
-    $pdf->Cell(55,5,'GOHO020105HMCNRMA3',1,1,'C',1);
+    $pdf->Cell(70,5,$this->derechoHabiente->correo,1,0,'C',1);
+    $pdf->Cell(63,5,$this->derechoHabiente->ocupacion,1,0,'C',1);
+    $pdf->Cell(55,5,$this->derechoHabiente->curp,1,1,'C',1);
     $pdf->Cell(70,5,utf8_decode('Correo electrónico:'),1,0,'C');
     $pdf->Cell(63,5,utf8_decode('Ocupación'),1,0,'C');
     $pdf->Cell(55,5,'CURP:',1,1,'C');
-    $pdf->Cell(82,5,'',1,0,'C',1);
-    $pdf->Cell(51,5,'',1,0,'C',1);
-    $pdf->Cell(55,5,'',1,1,'C',1);
+    $pdf->Cell(82,5,$this->derechoHabiente->puesto,1,0,'C',1);
+    $pdf->Cell(51,5,$this->derechoHabiente->sueldo,1,0,'C',1);
+    $pdf->Cell(55,5,$this->derechoHabiente->nEmpleado,1,1,'C',1);
     $pdf->Cell(82,5,utf8_decode('Nombre de plaza o puesto:'),1,0,'C');
     $pdf->Cell(51,5,utf8_decode('Sueldo mensual'),1,0,'C');
     $pdf->Cell(55,5,utf8_decode('Número de empleado'),1,1,'C');
-    $pdf->Cell(188,5,'',1,1,'C',1);
+    $pdf->Cell(188,5,$this->derechoHabiente->adscripcion,1,1,'C',1);
     $pdf->Cell(188,5,utf8_decode('Adscripción '),1,1,'C');
-    $pdf->Cell(188,5,'',1,1,'C',1);
+    $pdf->Cell(188,5,'Ingeniero',1,1,'C',1);
     $pdf->Cell(188,5,utf8_decode('Nombre y cargo de su jefe o jefa inmediato'),1,1,'C');
-    $pdf->Cell(128,5,'',1,0,'C',1);
-    $pdf->Cell(60,5,'',1,1,'C',1);
+    $pdf->Cell(128,5,$this->derechoHabiente->horarioTrabajo,1,0,'C',1);
+    $pdf->Cell(60,5,$this->derechoHabiente->extencion,1,1,'C',1);
     $pdf->Cell(128,5,utf8_decode('Horario de trabajo'),1,0,'C');
     $pdf->Cell(60,5,utf8_decode('Extensión'),1,1,'C');
 
@@ -213,17 +202,17 @@ public function __construct($dato, $dato2)
     $pdf ->SetFont('helvetica','',6.7);
     $pdf->Cell(130);
     $pdf->Cell(10,5,utf8_decode('Firmar en color azul'),0,1);
-    $pdf->Output('F', '../generadosPdf/inscripcion.pdf', true);
+    $pdf->Output('F', '../generadosPdf/' . $this->child->boleta . '.pdf', true);
   }
     
 }
 //prueba namas para ver que funcione
-$ej = new Pdf('este es 1', 'este es dos');
- $ej->crearPdf();
+//$ej = new Pdf('este es 1', 'este es dos');
+ //$ej->crearPdf();
 
- include __DIR__ . '/../pruba.php';
- $mail->addAttachment( '../generadosPdf/inscripcion.pdf', 'Registro_Info.pdf');
- if( $mail->send()) {echo 'se envio el pdf';}
+// include __DIR__ . '/../pruba.php';
+ //$mail->addAttachment( '../generadosPdf/inscripcion.pdf', 'Registro_Info.pdf');
+ //if( $mail->send()) {echo 'se envio el pdf';}
  
- unlink('../generadosPdf/inscripcion.pdf');
+// unlink('../generadosPdf/inscripcion.pdf');
  

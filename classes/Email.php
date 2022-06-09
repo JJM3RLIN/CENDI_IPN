@@ -8,13 +8,16 @@ class Email
 {
     public $email;
     public $nombre;
-    public function __construct($email, $nombre)
+    public $nombrePdf;
+    public function __construct($email, $nombre, $pdf)
     {
         $this->email = $email;
         $this->nombre = $nombre;
+        $this->nombrePdf = $pdf;
     }
     public function enviarPdf()
     {
+       
     
         $mail = new PHPMailer();
         $mail->isSMTP();
@@ -33,15 +36,13 @@ class Email
 
 
         //Añadimos el pdf creado
-        $mail->addAttachment(__DIR__ . '/../generadosPdf/inscripcion.pdf', 'Registro_Info.pdf');
+        $mail->addAttachment(__DIR__ . '/../generadosPdf/'. $this->nombrePdf .'.pdf', 'Registro_Info.pdf');
         //Que el correo nos acepte HTML
         $mail->isHTML(true);
         $mail->Subject = 'Expediente de inscripción';
         $mail->Body = '<html>
         <h1 style="text-align:center;">El PDF anexado contiene información acerca de la inscripción</h1></html>';
 
-       if( $mail->send()) {echo 'se envio';}
-       //Eliminamos el pdf que se envia
-       unlink(__DIR__ . '/../generadosPdf/inscripcion.pdf');
+       $mail->send();
     }
 }
