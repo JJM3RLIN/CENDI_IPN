@@ -4,12 +4,38 @@ namespace Controllers;
 use Models\Child;
 use Models\Conyu;
 use Models\Derechohabiente;
-
+use MVC\Router;
 class AdminController{
 
-    public static function update(){
-      
+  public static function updateRender(Router $router){
+          $router->render('admin/actualizar', []);    
+      }
+
+//Traer info de la bd para mostrarla
+  public static function traerInfo(){
+  
+    $derechoHabiente = new Derechohabiente;
+    $child = new Child;
+    $conyugue = new Conyu;
+    $curp = $_POST['curp'];
+
+    //completar el mysql
+    $sentenciaDerecho = "curp='" . $curp . "'";
+    $sentencia = "curpD='" . $curp . "'";
+    $derechoBD = $derechoHabiente->some($sentenciaDerecho)[0];
+    $childBD = $child->some($sentencia)[0];
+
+    //Verificamos que exista un conyugue
+    if($conyugue->some($sentencia)){
+      $conyuBD = $conyugue->some($sentencia)[0];
+      echo json_encode(['child'=>$childBD, 'derecho'=>$derechoBD, 'conyu'=> $conyuBD]);
+    }else{
+      echo json_encode(['child'=>$childBD, 'derecho'=>$derechoBD, 'conyu'=> 0]);
     }
+
+
+}
+
     public static function delete(){
  
         $derechoHabiente = new Derechohabiente;
@@ -28,7 +54,7 @@ class AdminController{
         $child->delete($sentencia);
 
         //verificar que tenga conyugue
-       $exiteConyu = $conyugue->some($sentencia);
+       $exiteConyu = $conyugue->some($sentencia)[0];
 
        //Si lo tiene lo borramos
        if($exiteConyu){

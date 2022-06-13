@@ -73,9 +73,8 @@ async function agregarEstados() {
    );
    }
    
-
-
 }
+
 async function colcocarMunicipios(municipios) {
   //El padre es el contenedor de los option
   const padre = document.querySelector(".municipio");
@@ -135,16 +134,19 @@ function mostrarConyugue(){
   opciones.forEach(input=>{
     input.addEventListener('click', e=>{
 
-      //Mostramos el boton de registrar sun importar el resultado
+      if(btnEnviarInfo){
+        //Mostramos el boton de registrar sun importar el resultado
       btnEnviarInfo.classList.remove('hidden');
+      }
       if(e.target.value === 'si'){
 
         //Mostrar o no la info del conyugue
          btnCon.classList.remove('hidden');
+         if(infoConyugue){
          infoConyugue.classList.remove('hidden');
-
-         //Crear la foto para el conyuge
-         mostrarFotoConyugue();
+           //Crear la foto para el conyuge
+           mostrarFotoConyugue();
+         }
       }else{
         btnCon.classList.add('hidden');
         infoConyugue.classList.add('hidden');

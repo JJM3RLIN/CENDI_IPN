@@ -5,7 +5,7 @@ class PaginaInicialController{
     public static function index (Router $router){
 
         $index = true;
-        $router->render('index', ['index' => $index]);
+        $router->render('paginas/index', ['index' => $index]);
 
     }
 }

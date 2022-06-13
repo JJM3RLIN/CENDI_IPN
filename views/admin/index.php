@@ -38,7 +38,7 @@ $admin = $_SESSION['usuario'];
             <td class="border border-slate-600 py-2 px-3" ><?php echo $registro->nEmpleado; ?></td>
             <td class="border border-slate-600 py-2 px-3" ><?php echo $registro->adscripcion; ?></td>
                 <td>
-                 <a class="bg-blue-600 text-white" href="/usuarios/actualizar?curp=<?php echo $registro->curp ?>">Actualizar</a>
+                    <a class="bg-blue-600 text-white" href="/admin/actualizar?curp=<?php echo $registro->curp ?>">Actualizar</a>
                     <button type="button" id="<?php echo $registro->curp ?>" class="botonesEliminar bg-red-600 text-white py-2 px-1">Eliminar</button>  
                 </td>
             </tr>

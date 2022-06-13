@@ -32,8 +32,9 @@ $router->post('/usuarios/ApiCrear', [RegistroController::class, 'guardar']);
 //Guardar Fotos
 $router->post('/usuarios/fotos', [RegistroController::class, 'guardarFotos']);
 
-$router->get('/admin/actualizar', []);
-$router->post('/admin/actualizar', []);
+$router->get('/admin/actualizar', [AdminController::class, 'updateRender']);
+$router->post('/admin/traerInfo', [AdminController::class, 'traerInfo']);
+$router->post('/admin/actualizar', [AdminController::class, 'update']);
 
 $router->post('/admin/eliminar', [AdminController::class, 'delete']);
 

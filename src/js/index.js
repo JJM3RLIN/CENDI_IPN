@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Eliminar registros
     eliminarRegistro();
+    actualizarRegistro();
  
 
   });
