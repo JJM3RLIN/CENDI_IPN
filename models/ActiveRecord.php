@@ -27,8 +27,8 @@ class ActiveRecord
         //Recorremos las columnas de la BD para mapear los datos
         foreach (static::$columnasDb as $columna) {
             //El id no se actualiza
-            if ($columna === 'curp') continue;
-            $atributos[] = $this->$columna;
+            if ($columna === 'curp' || $columna === 'foto') continue;
+            $atributos[$columna] = $this->$columna;
         }
         foreach ($atributos as $key => $value) {
             $sanitizados[$key] = self::$db->escape_string($value);
@@ -89,19 +89,20 @@ class ActiveRecord
        return $resultado;
     }
     //Actualizar un registro
-    public function update()
+    public function update($sentencia)
     {
         $atributos = $this->sanitizar();
         //Unit la BD con los nuevos valores
         $valores = [];
-        //Hacer mas dinamico el actualizado
+        //Hacer mas dinamico el actualizado y evitamos la foto
         foreach ($atributos as $key => $value) {
             $valores[] = "{$key} = '{$value}'";
         }
         //Unimos todo los guardado en el arreglo como un string
         $query = 'UPDATE ' . static::$tabla . ' SET ' . join(', ', $valores);
         //concatenamos
-        $query .= "WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+        $query .= " WHERE " . $sentencia;
+      
         $resultado = self::$db->query($query);
         return $resultado;
     }
@@ -148,7 +149,7 @@ $resultado->free();
         return $objeto;
     }
 
-    //validacion de que no haya errores
+    //validacion de que no haya errores en el login
     public static function getErrores()
     {
         return static::$errores;

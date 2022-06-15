@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
     //Eliminar registros
     eliminarRegistro();
     actualizarRegistro();
+    tipoActualizacion();
+
+    //buscar pdf
+    buscarPdf();
  
 
   });

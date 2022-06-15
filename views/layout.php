@@ -69,6 +69,29 @@ $registrado = $_GET['tipo'] ?? '';
     alert('Se te envio un correo con la información sobre la inscripción.');
  }, 3000);
     </script>"  : '' ?>
+        <?php echo $registrado == '2'? "<script>
+ function alert(mensaje){
+ 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: mensaje
+      }) 
+
+ } 
+ alert('Datos actualizados correctamente.');
+    </script>"  : '' ?>
 </body>
 
 </html>

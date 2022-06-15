@@ -8,6 +8,34 @@ use MVC\Router;
 class AdminController{
 
   public static function updateRender(Router $router){
+
+    //Actualizacion de imagenes
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+      $fotoChild = $_FILES['fotoChild'] ?? [];
+      $fotoDerecho = $_FILES['fotoDerecho'] ?? [];
+      $fotoConyu = $_FILES['fotoCon'] ?? [];
+
+      $curp = $_POST['curp'];
+      $boleta = $_POST['boleta'];
+      $carpeta = '../fotos/';
+      if(!empty($fotoChild)){
+        //Eliminar foto anterior
+        unlink(__DIR__ . '/../fotos/' . $boleta . '.jpg');
+
+        //Crear Nueva foto
+        move_uploaded_file($fotoChild['tmp_name'], $carpeta . $boleta . '.jpg');
+       
+      }
+      if(!empty($fotoDerecho)){
+         unlink(__DIR__ . '/../fotos/' . $curp . '.jpg');
+         move_uploaded_file($fotoChild['tmp_name'], $carpeta . $curp . '.jpg');
+      }
+      if(!empty($fotoConyu)){
+        unlink(__DIR__ . '/../fotos/' . $curp . 'Con.jpg');
+        move_uploaded_file($fotoConyu['tmp_name'], $carpeta . $curp . 'Con.jpg');
+      }
+      header('Location: /admin?tipo=2');
+    }
           $router->render('admin/actualizar', []);    
       }
 
@@ -76,4 +104,45 @@ class AdminController{
         //Le mandamos una respuesta el front
         echo json_encode(['respuestaB' => 1]);
     }
+
+    public static function update(){
+      $sentenciaDerecho = "curp='" . $_POST['curp'] . "'";
+      $sentencia = "curpD='" . $_POST['curp'] . "'";
+
+      $derechoHabiente = [
+        'nombre' => $_POST['nombre'], 'apellidoP' => $_POST['apellidoP'], 'apellidoM' => $_POST['apellidoM'],
+        'municipio' => $_POST['municipio'], 'entidadFederativa' => $_POST['entidadFederativa'], 'cp' => $_POST['cp'], 'domicilio' => $_POST['domicilio'],
+        'tel_f' => $_POST['tel_F'],  'tel_c' => $_POST['tel_C'], 'correo' => $_POST['correo'], 'ocupacion' => $_POST['ocupacion'], 'curp' => $_POST['curp'],
+        'puesto' => $_POST['puesto'], 'sueldo' => $_POST['sueldo'], 'nEmpleado' => $_POST['nEmpleado'], 'adscripcion' => $_POST['adscripcion'],
+        'horarioTrabajo' => $_POST['horarioTrabajo'], 'extencion' => $_POST['extension']
+    ];
+  $derechoHabienteBD = new Derechohabiente($derechoHabiente);
+ $derechoHabienteBD->update($sentenciaDerecho);
+
+   
+   $child = [
+    'cendi' => $_POST['cendi'], 'nombre' => $_POST['nombreC'], 'apellidoP' => $_POST['apellidoPC'], 'apellidoM' => $_POST['apellidoMC'], 'boleta' => $_POST['boleta'],
+    'grupo' => $_POST['grupo'], 'fechaNacimiento' => $_POST['fNacimiento'], 'curp' => $_POST['curpC'], 'curpD' => $_POST['curpD'], 'edad' => $_POST['edad']
+];
+
+   $childBD = new Child($child);
+   $childBD->update( $sentencia); 
+   $conyugue = [
+    'nombre' => $_POST['nombreCO'] ?? '', 'apellidoP' => $_POST['apellidoPCO'] ?? '', 'apellidoM' => $_POST['apellidoMCO'] ?? '',
+    'municipio' => $_POST['municipio'] ?? '', 'entidadFederativa' => $_POST['entidadFederativa'] ?? '', 'cp' => $_POST['cp'] ?? '', 'domicilio' => $_POST['domicilio'] ?? '',
+    'telefono' => $_POST['telefono'] ?? '',  'lugarTrabajo' => $_POST['lugarTrabajo'] ?? '', 'domicilioTrabajo' => $_POST['domicilioTrabajo'] ?? '',
+    'telTrabajo' => $_POST['tel_trabajo'] ?? '', 'extencion' => $_POST['extensionCO'] ?? '', 'curpD' => $_POST['curpD'] ?? ''
+];
+/*$conyugueBD = new Conyu($conyugue);
+if($_POST['tieneCon'] == '1'){
+
+  //Si lo tiene lo añadimos a la bd
+     $conyugueBD->update( $sentencia);
+ }*/
+
+ echo json_encode(["respuesta" => 1]);
+  
+    }
+    
 }
+

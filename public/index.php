@@ -22,18 +22,23 @@ $router->get("/login", [LoginController::class, 'login']);
 $router->post("/login", [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
 $router->get('/', [PaginaInicialController::class, 'index']);
-//RUTAS PROTEGIDAS
-$router->get('/admin', [RegistroController::class, 'index']);
-$router->post('/admin', [RegistroController::class, 'index']);
+
 
 $router->get('/usuarios/crear', [RegistroController::class, 'renderizar']);
 $router->post('/usuarios/ApiCrear', [RegistroController::class, 'guardar']);
-
+//Obtener un pdf
+$router->get('/buscarPdf', [PaginaInicialController::class, 'buscarPdfRender']);
+$router->post('/buscarPdfObtener', [PaginaInicialController::class, 'buscarPdf']);
+//RUTAS PROTEGIDAS
+$router->get('/admin', [RegistroController::class, 'index']);
+$router->post('/admin', [RegistroController::class, 'index']);
 //Guardar Fotos
 $router->post('/usuarios/fotos', [RegistroController::class, 'guardarFotos']);
 
 $router->get('/admin/actualizar', [AdminController::class, 'updateRender']);
+$router->post('/admin/actualizar/fotos', [AdminController::class, 'updateRender']);
 $router->post('/admin/traerInfo', [AdminController::class, 'traerInfo']);
+//Actualizar la info
 $router->post('/admin/actualizar', [AdminController::class, 'update']);
 
 $router->post('/admin/eliminar', [AdminController::class, 'delete']);

@@ -157,8 +157,8 @@
     <div class="bg-grafico my-4 bg-fixed bg-cover bg-no-repeat ">
 		<div class="bg-black/50">
         <div class="px-5 py-5 flex flex-col justify-center items-center text-white">
-        <p class="text-center font-semibold text-xl m-4 md:text-4xl">El CENDI es un lugar para que tu hijo aprenda mientas trabajas </p> 
-       <a class="bg-transparent border border-slate-50 py-2 px-5 text-xl m-3" href="/usuarios/crear">Pasos para la inscripción</a>
+        <p class="text-center font-semibold text-xl m-4 md:text-4xl">Perdiste la ficha de inscripción?, Recueperala dando click en el botón </p> 
+       <a class="bg-transparent border border-slate-50 py-2 px-5 text-xl m-3 hover:bg-red-900" href="/buscarPdf">Recuperar</a>
         </div>
         </div>
 	</div>

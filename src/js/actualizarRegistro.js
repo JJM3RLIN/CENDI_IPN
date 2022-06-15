@@ -95,8 +95,12 @@ function mostrarValores({child, derecho, conyu}){
        derechoHabienteDatos.sueldo =  derecho.sueldo;
        document.querySelector("#nEmpleado").value = derecho.nEmpleado;
        derechoHabienteDatos.nEmpleado = derecho.nEmpleado;
-       document.querySelector("#adscripcion").value = derecho.adscripcion;
+
+       //Verificar si es superior o medio superior
        derechoHabienteDatos.adscripcion = derecho.adscripcion;
+       let tipoAd =  derecho.adscripcion.includes('CECYT') ? 'medioSuperior' : 'superior';
+       document.querySelector('#tipoEscuela').value = tipoAd;
+       agregarEscuelasActu(tipoAd, derecho.adscripcion);
        document.querySelector("#horaTrabajo").value = derecho.horarioTrabajo;
        derechoHabienteDatos.horarioTrabajo = derecho.horarioTrabajo;
        document.querySelector("#extencionDE").value = derecho.extencion;
@@ -104,25 +108,84 @@ function mostrarValores({child, derecho, conyu}){
 
        //Conyugue
        if(conyu === 0){
-        console.log('no tiene conyugue');
         document.querySelector("#rNo").checked = true;
        }else{
         document.querySelector("#rSi").checked = true;
+        //Aparecer btn y foto del conyugue
+        mostrarFotoConyugue();
+        document.querySelector("[data-paso='3']").classList.remove('hidden');
+        //Mostrar info del conyugue
+     document.querySelector('#nombreCon').value = conyu.nombre;
+     conyuDatos.nombreCO = conyu.nombre;
+     document.querySelector('#pApellidoCon').value = conyu.apellidoP;
+     conyuDatos.apellidoPCO = conyu.apellidoP;
+     document.querySelector('#sApellidoCon').value = conyu.apellidoM;
+     conyuDatos.apellidoMCO = conyu.apellidoM;
+     document.querySelector("#tel_fCon").value = conyu.telefono;
+     conyuDatos.tel_trabajo = conyu.telefono;
+     document.querySelector("#lugarTrabCon").value = conyu.lugarTrabajo;
+     conyuDatos.lugarTrabajo = conyu.lugarTrabajo;
+     document.querySelector('#domiTrabajoCon').value = conyu.domicilioTrabajo;
+     conyuDatos.domicilioTrabajo = conyu.domicilioTrabajo;;
+     document.querySelector('#telTrabajo').value = conyu.telTrabajo;
+     conyuDatos.tel_trabajo = conyu.telTrabajo;
+     document.querySelector('#extCon').value = conyu.extencion;
+     conyuDatos.extensionCO = conyu.extencion;
        }
-    /* document.querySelector('#nombreCon') = '';
-     document.querySelector('#pApellidoCon') = '';
-     document.querySelector('#sApellidoCon') = '';
-     document.querySelector("#tel_fCon") = '';
-     document.querySelector("#lugarTrabCon") = '';
-     document.querySelector('#domiTrabajoCon') = '';
-     document.querySelector('#telTrabajo') = '';
-     document.querySelector('#extCon') = '';*/
+     
 }
 
-function actualizarInformacion(e){
+async function actualizarInformacion(e){
     e.preventDefault();
+
+    const datos = new FormData();
+ 
+  
+    //Niño
+    const valoresChild = Object.values(childDatos);
+   //Añadimos los datos del niño para que sean enviados al servidor
+   Object.keys(childDatos).forEach((key, index) => {
+     datos.append(key, valoresChild[index]);
+   });
+  
+   //Añadimos los datos del DerechoHabiente
+   const valoresDe = Object.values(derechoHabienteDatos);
+   //Obtenemos los atributos en un arreglo
+   Object.keys(derechoHabienteDatos).forEach((key, index) => {
+     datos.append(key, valoresDe[index]);
+   });
+  
+   if(!Object.values(conyuDatos).includes("")){
+     datos.append('tieneCon', '1');
+     const valoresConyu = Object.values(conyuDatos);
+     Object.keys(conyuDatos).forEach((key, index) => {
+      datos.append(key, valoresConyu[index]);
+    });
+   }else{
+    datos.append('tieneCon', '0');
+   }
+try {
+  const url = '/admin/actualizar';
+    const solicitud = await fetch(url,{
+        method: 'POST',
+        body: datos
+    });
+    const respuesta = await solicitud.json();
+    console.log(respuesta);
+    if(respuesta.respuesta === 1){
+      alerta('Se actualizo correctamente la información', 'success');
+      //redireccionamos
+     setTimeout(() => {
+      location.href('/admin');
+     }, 2000);
+    } 
+    
+} catch (error) {
+    console.log(error);
+}
     console.log(childDatos);
     console.log(derechoHabienteDatos);
+    console.log(conyuDatos)
 }
 async function traerMunicipios (estado, derechoMun){
       //consulta a los municipios
@@ -130,6 +193,56 @@ async function traerMunicipios (estado, derechoMun){
   const peticion = await fetch(urlMunicipios);
   const resultado = await peticion.json();
   colcocarMunicipios(resultado[estado])
-  console.log(derechoMun)
   document.querySelector("#alcmuni").value = derechoMun;
+}
+async function agregarEscuelasActu(tipo, adscripcion){
+    const url = "/escuelas";
+    const respuesta = await fetch(url);
+    const resultado = await respuesta.json();
+      crearOptionEscuela(resultado[tipo]);
+      document.querySelector("#adscripcion").value = adscripcion;
+    
+  }
+
+function tipoActualizacion(){
+  const btnDatos = document.querySelector('#btnDatos');
+  const btnFotos = document.querySelector('#btnFotos');
+  const formFotos = document.querySelector('#fotosActualizar');
+  const formDatos = document.querySelector('#datosActualizar');
+//Evitar que nos salte warning en la consola
+  if(formFotos){
+  btnDatos.addEventListener('click', ()=>{
+    if(formDatos.classList.contains('hidden')){
+      formDatos.classList.remove('hidden');
+      formFotos.classList.add('hidden');
+     //Desmarcar el btn de las fotos
+    btnFotos.classList.remove('text-white');
+    btnFotos.classList.remove('bg-orange-700');
+    btnFotos.classList.add('bg-transparent');
+    btnFotos.classList.add('text-orange-700');
+
+    btnDatos.classList.remove('bg-transparente');
+    btnDatos.classList.add('text-white');
+
+    }
+    btnDatos.classList.add('bg-amber-600');
+    btnDatos.classList.remove('text-amber-600');
+  })
+  btnFotos.addEventListener('click', ()=>{
+    formDatos.classList.add('hidden');
+    formFotos.classList.remove('hidden');
+
+    //Marcar el btn de las fotos
+    btnFotos.classList.add('text-white');
+    btnFotos.classList.add('bg-orange-700');
+    btnFotos.classList.remove('bg-transparent');
+    btnFotos.classList.remove('text-orange-700');
+   //Desmarcar el btn de datos
+   btnDatos.classList.add('bg-transparent');
+   btnDatos.classList.add('text-amber-600');
+   btnDatos.classList.remove('bg-amber-600');
+   btnDatos.classList.remove('text-white');
+
+  })
+}
 }

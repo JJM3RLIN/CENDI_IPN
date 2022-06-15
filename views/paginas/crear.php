@@ -74,17 +74,7 @@
     
   <form action="/usuarios/fotos" method="POST" enctype="multipart/form-data" class="formFotos bg-white p-12 rounded-md shadow-md">
   <h2 class="font-bold text-2xl">Para finalizar agrega las fotos correspondientes</h2>   
-  <input type="hidden" name="curp" id="curpImg">
-  <input type="hidden" name="boleta" id="bolteaImg">
-      <div class="mb-3">
-          <label class="text-gray-600 font-semibold text-lg" for="imgChild">Foto del niño o la niña</label>
-          <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgChild" name="fotoChild">
-      </div>
-
-      <div class="mb-3">
-          <label class="text-gray-600 font-semibold text-lg" for="imgDerecho">Foto del DerechoHabiente</label>
-          <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgDerecho" name="fotoDerecho">
-      </div>
+<?php require __DIR__ . '../../../includes/templates/formFotos.php' ?>
   </form>
 </section>
 
