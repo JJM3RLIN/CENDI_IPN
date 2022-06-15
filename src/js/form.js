@@ -144,6 +144,12 @@ function mostrarConyugue(){
          btnCon.classList.remove('hidden');
          if(infoConyugue){
          infoConyugue.classList.remove('hidden');
+         //Mostrar tres columnas en el resumen
+         if(document.querySelector('.resumenDatos').classList.contains('grid-cols-2')){
+          document.querySelector('.resumenDatos').classList.add('grid-cols-2')
+          document.querySelector('.resumenDatos').classList.add('grid-cols-3')
+         }
+
            //Crear la foto para el conyuge
            mostrarFotoConyugue();
          }

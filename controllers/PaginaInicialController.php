@@ -1,5 +1,8 @@
 <?php
 namespace Controllers;
+
+use Classes\Email;
+use Models\Derechohabiente;
 use MVC\Router;
 class PaginaInicialController{
     public static function index (Router $router){
@@ -13,15 +16,19 @@ class PaginaInicialController{
         $router->render( 'paginas/buscarPdf' ,[]);
     }
     public static function buscarPdf(){
-          $pdf = '../generadosPdf/' . $_POST['pdf'];
-
-            //que abra el pdf en modo lectura
-           $archivo = readfile($pdf);
-           if(!$archivo){
-            echo json_encode(['mensaje'=> 'Ficha de inscripción no encontrada', 'tipo'=> 'error']);
-           }else{
-            echo json_encode(['mensaje'=> 'Ficha de inscripción encontrada', 'tipo'=> 'success']);
-           }
+     $pdf =  $_POST['pdf'];
+     $curp = $_POST['curp'];
+     $sentencia = "curp='" . $curp . "'";
+      $derecho = new Derechohabiente(); 
+      $derechoBD =  $derecho->some($sentencia);
+        if(file_exists('../generadosPdf/' . $pdf . ".pdf")){
+            $mail = new Email($derechoBD[0]->correo, $derechoBD[0]->nombre,$pdf);
+            //Se envia el correo otra vez
+            $mail->enviarPdf();
+            echo json_encode(['mensaje'=>'Se ha enviado a tu correo la ficha de inscripción', "tipo"=>"success"]);
+        }else{
+            echo json_encode(['mensaje'=>'No se ecnontro la ficha de inscripción', "tipo"=>"error"]);
+        }
         
     }
 }

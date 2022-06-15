@@ -374,7 +374,7 @@ formFotos.classList.remove('hidden');
  //Cambiar el texco del h1
  titulo.innerHTML = `Hola <span class='font-bold'>${derechoHabienteDatos.nombre}</span> verifica que tus datos sean correctos`;
 
-  //Mnadar los datos al srrvidor
+  //Mnadar los datos al servidor
 btnSubirDatos.addEventListener('click', ()=> { 
    
   btnSubirDatos.disabled = true;

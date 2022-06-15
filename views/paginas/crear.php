@@ -12,7 +12,7 @@
 
     <section id="resumen" class="hidden">
 
-   <div class="grid grid-cols-1 md:grid-cols-2 place-items-center">
+   <div class="resumenDatos grid grid-cols-1 md:grid-cols-2 ">
    <section>
    <h2>Datos del Niño</h2>
     <p>Apellido Paterno: <span class="text-indigo-800" id="apellidoPC"></span></p>
