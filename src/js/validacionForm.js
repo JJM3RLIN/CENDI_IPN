@@ -369,10 +369,9 @@ function mostrarResumen(){
  resumen.classList.remove('hidden');
  resumen.classList.add('block');
 
- //Mostrar el form de fotos
-formFotos.classList.remove('hidden');
+ 
  //Cambiar el texco del h1
- titulo.innerHTML = `Hola <span class='font-bold'>${derechoHabienteDatos.nombre}</span> verifica que tus datos sean correctos`;
+ titulo.innerHTML = `Hola <span class='font-bold text-red-900'>${derechoHabienteDatos.nombre}</span> verifica que tus datos sean correctos`;
 
   //Mnadar los datos al servidor
 btnSubirDatos.addEventListener('click', ()=> { 
@@ -542,6 +541,15 @@ async function subirDatos(){
 
 }
 function mostrarModalFotos(){
+  const formFotos = document.querySelector('.fotos');
+  const formAparecer = document.querySelector('.formFotos')
+  const body = document.getElementsByTagName('body');
+  //Mostrar el form de fotos
+formFotos.classList.remove('hidden');
+formFotos.classList.add('flex');
+formAparecer.classList.remove('opacity-0');
+formAparecer.classList.add('opacity-100');
+body.classList.add('overflow-hidden');
   
 }
 function validarCurp(curp) {

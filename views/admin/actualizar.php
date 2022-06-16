@@ -10,8 +10,7 @@
         <button class="bg-red-700 rounded text-white p-2 mt-3 w-full uppercase hover:bg-red-900 font-bold" type="submit">Actualizar</button>
     </form>
 
-    <form action="/admin/actualizar/fotos" method="POST" class="hidden bg-white p-12 rounded-md shadow-md" id="fotosActualizar" enctype="multipart/form-data">
+    <form action="/admin/actualizar/fotos" method="POST" class="formFotos hidden bg-white p-12 rounded-md shadow-md" id="fotosActualizar" enctype="multipart/form-data">
         <?php require __DIR__ . '../../../includes/templates/formFotos.php' ?>
-        <button class="bg-red-800 cursor-pointer px-3 py-2 hover:bg-red-900 text-white font-bold w-full mt-3 text-xl" type="submit">Actualizar fotos</button>
     </form>
 </main>

@@ -26,7 +26,7 @@ class Router {
         $metodo = $_SERVER['REQUEST_METHOD'];
 
         //Rutas protegitas
-        $protegidas = ['/admin',' /admin/actualizar', '/admin/eliminar'];
+        $protegidas = ['/admin',' /admin/actualizar', '/admin/eliminar', 'admin/ver'];
 
         if( $metodo === 'POST'){
             //Obtengo la fn que ejecuta esa ruta

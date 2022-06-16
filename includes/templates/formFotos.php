@@ -9,3 +9,8 @@
           <label class="text-gray-600 font-semibold text-lg" for="imgDerecho">Foto del DerechoHabiente</label>
           <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgDerecho" name="fotoDerecho">
       </div>
+
+      <div class="mb-3">
+          <label class="text-gray-600 font-semibold text-lg" for="imgAutorizada">Foto de la persona autorizada</label>
+          <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgAutorizada" name="imgAutorizada">
+      </div>

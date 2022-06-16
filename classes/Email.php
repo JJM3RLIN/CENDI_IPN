@@ -9,11 +9,13 @@ class Email
     public $email;
     public $nombre;
     public $nombrePdf;
-    public function __construct($email, $nombre, $pdf)
+    public $grupo;
+    public function __construct($email, $nombre, $pdf, $grupo)
     {
         $this->email = $email;
         $this->nombre = $nombre;
         $this->nombrePdf = $pdf;
+        $this->grupo = $grupo;
     }
     public function enviarPdf()
     {
@@ -42,6 +44,12 @@ class Email
         $mail->Subject = 'Expediente de inscripción';
         $mail->Body = '<html>
         <h1 style="text-align:center;">El PDF anexado contiene información acerca de la inscripción</h1></html>';
+       if($this->grupo === 'LAC I' || $this->grupo === 'LAC II'){
+        $mail->Body.= '<h2>Tu cita es a las: ' . '</h2>';
+       }else{
+        $mail->Body.= '<h2>Entrega tus documentos a las: ' . '</h2>';
+       }
+        
 
        $mail->send();
     }

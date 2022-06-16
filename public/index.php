@@ -29,12 +29,15 @@ $router->post('/usuarios/ApiCrear', [RegistroController::class, 'guardar']);
 //Obtener un pdf
 $router->get('/buscarPdf', [PaginaInicialController::class, 'buscarPdfRender']);
 $router->post('/buscarPdfObtener', [PaginaInicialController::class, 'buscarPdf']);
+
+//Mostrar los grupos
+$router->get('/grupos', [RegistroController::class, 'grupos']);
 //RUTAS PROTEGIDAS
 $router->get('/admin', [RegistroController::class, 'index']);
 $router->post('/admin', [RegistroController::class, 'index']);
 //Guardar Fotos
 $router->post('/usuarios/fotos', [RegistroController::class, 'guardarFotos']);
-
+$router->get('/admin/ver', [AdminController::class, 'verDatos']);
 $router->get('/admin/actualizar', [AdminController::class, 'updateRender']);
 $router->post('/admin/actualizar/fotos', [AdminController::class, 'updateRender']);
 $router->post('/admin/traerInfo', [AdminController::class, 'traerInfo']);

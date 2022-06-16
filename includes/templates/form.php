@@ -12,15 +12,17 @@
             </div>
 
             <section>
-                <div class="flex justify-between items-center">
-                    <div class="px-1">
+                <div class="flex justify-between items-center flex-col md:flex-row">
+                    <div class=" w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="boleta">Folio (boleta):</label>
                         <input placeholder="Ej. 2021630376, PE12345678, PP12345678" class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="boleta">
                     </div>
 
-                    <div class=" px-1">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="grupo">Grupo:</label>
-                        <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="grupo">
+                        <select class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" id="grupo">
+                        <option selected disabled>--Selecciona una grupo--</option>
+                         </select>   
                     </div>
 
                 </div>
@@ -33,19 +35,19 @@
             </div>
             
             <section>
-                <div class="flex justify-between items-center">
-                    <div class=" px-1">
+                <div class="flex justify-between items-center flex-col md:flex-row">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="Papellido">Primer Apellido:</label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="apellidoP">
                     </div>
-                    <div class=" px-1">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="Spellido">Segundo Apellido: </label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="apellidoM">
                     </div>
                 </div>
             </section>
             <div>
-                <label class="text-gray-600 font-normal text-lg" for="nombre">Nombre: </label>
+                <label class="text-gray-600 font-normal text-lg" for="nombre">Nombre(s): </label>
                 <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="nombre">
             </div>
             <div>
@@ -68,12 +70,12 @@
                 <span class="text-gray-600 mb-5 text-center font-medium">DATOS DEL O DE LA DERECHOHABIENTE</span>
             </div>
             <section>
-                <div class="flex justify-between items-center">
-                    <div class=" px-1">
+                <div class="flex justify-between items-center flex-col md:flex-row">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="pApellidoD">Primer Apellido: </label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="pApellidoD">
                     </div>
-                    <div class="px-1">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="sApellidoD">Segundo Apellido: </label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="sApellidoD">
                     </div>
@@ -90,7 +92,7 @@
                 <textarea rows="3" class="border w-full outline-none focus:border-green-500" id="domicilio" placeholder="Calle, no.Ext, no.Int, Colonia"></textarea>
             </div>
 
-            <div class="flex">
+            <div class="flex justify-between items-center flex-col md:flex-row">
                 <div class="w-full px-1">
                     <label class="text-gray-600 font-normal text-lg" for="entidad"> Entidad Federativa: </label>
                     <select class="entidad block mb-4 w-full px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" id="entidad">
@@ -111,12 +113,12 @@
                 <input min='0' class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="cp">
             </div>
             <section>
-                <div class="flex justify-between items-center">
-                    <div class="w-1/2 px-1">
+                <div class="flex justify-between items-center flex-col md:flex-row">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="tel_f">Telefono Fijo: </label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="tel_f">
                     </div>
-                    <div class="w-1/2 px-1">
+                    <div class="w-full px-1">
                         <label class="text-gray-600 font-normal text-lg" for="tel_c">Telefono Celular: </label>
                         <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="tel_c">
                     </div>
@@ -149,7 +151,7 @@
                 <input min='0' class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="sueldo">
             </div>
 
-            <div class="flex">
+            <div class="flex justify-between items-center flex-col md:flex-row">
                 <div class="w-full px-1">
                     <label class="text-gray-600 font-normal text-lg" for="nEmpleado">Numero de Empleado: </label>
                     <input min='0' maxlength='7' class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="nEmpleado">
@@ -174,9 +176,9 @@
                 <label class="text-gray-600 font-normal text-lg" for="horaTrabajo">Horario de Trabajo: </label>
                 <select class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" id="horaTrabajo">
                     <option disabled selected>--Selecciona un horario--</option>
-                    <option value="horario1">07:00-15:00</option>
-                    <option value="horario2">08:00-15:00</option>
-                    <option value="horario3">07:00-14:00</option>
+                    <option value="07:00-15:00">07:00-15:00</option>
+                    <option value="08:00-15:00">08:00-15:00</option>
+                    <option value="07:00-14:00">07:00-14:00</option>
                 </select>
             </div>
             <div>
@@ -206,7 +208,7 @@
             </div>
 
 
-            <div class="flex">
+            <div class="flex justify-between items-center flex-col md:flex-row">
                 <div class="w-full px-1">
                     <label class="text-gray-600 font-normal text-lg" for="pAppelidoCon">Primer Apellido: </label>
                     <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="pApellidoCon">
@@ -222,7 +224,7 @@
                 <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="text" id="nombreCon">
             </div>
 
-            <div class="flex">
+            <div class="flex justify-between items-center flex-col md:flex-row">
                 <div class="w-full px-1">
                     <label class="text-gray-600 font-normal text-lg" for="telTrabajo">Telefono Trabajo: </label>
                     <input class="block w-full mb-4 px-1 py-1 border rounded-xl text-gray-700 focus:outline-none focus:border-green-500" type="number" id="telTrabajo">

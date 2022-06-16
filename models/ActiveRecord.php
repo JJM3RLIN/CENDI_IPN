@@ -80,6 +80,7 @@ class ActiveRecord
     {
         $query = 'SELECT * FROM ' . static::$tabla;
         $resultado = self::consultaSQL($query);
+        
         return $resultado;
     }
 
@@ -119,16 +120,20 @@ class ActiveRecord
     public static function consultaSQL($consulta)
     {
         $resultado = self::$db->query($consulta);
+       
 
         //Guardar lo traido de la bd pero ya transformado en objetos
         $array = [];
-
+        
         //Iterar lo traído desde la BD
         //Se ejecuta hasat el ultimo registro
         while ($registro = $resultado->fetch_assoc()) {
             //Creamos el objeto y lo guardamos
             $array[] = static::crearObjeto($registro);
         }
+       
+
+      
 
         //Liberar Memoria
 $resultado->free();
@@ -138,8 +143,9 @@ $resultado->free();
     {
 
         
-        //Creamos un objeto de la clase que onvoca, por eso static
+        //Creamos un objeto de la clase que invoca, por eso static
         $objeto = new static;
+       
         foreach($registro as $key => $value){
    
             if(property_exists($objeto, $key)){

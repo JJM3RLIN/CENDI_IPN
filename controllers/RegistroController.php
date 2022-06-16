@@ -9,10 +9,12 @@ use  Models\ActiveRecord;
 use Models\Child;
 use Models\Conyu;
 use Models\Derechohabiente;
+use Models\Grupos;
 
 class RegistroController
 {
 
+    //Mostrar en la tabla todos los derecho
     public static function index(Router $router)
     {
        
@@ -43,9 +45,12 @@ class RegistroController
         'cendi' => $_POST['cendi'], 'nombre' => $_POST['nombreC'], 'apellidoP' => $_POST['apellidoPC'], 'apellidoM' => $_POST['apellidoMC'], 'boleta' => $_POST['boleta'],
         'grupo' => $_POST['grupo'], 'fechaNacimiento' => $_POST['fNacimiento'], 'curp' => $_POST['curpC'], 'curpD' => $_POST['curpD'], 'edad' => $_POST['edad']
     ];
-
        $childBD = new Child($child);
        $childBD->add(); 
+       //Disminuir el cupo del grupo
+       $grupo = $_POST['grupo'];
+       $grupoBd = Grupos::decrementar($grupo);
+       
        $conyugue = [
         'nombre' => $_POST['nombreCO'] ?? '', 'apellidoP' => $_POST['apellidoPCO'] ?? '', 'apellidoM' => $_POST['apellidoMCO'] ?? '',
         'municipio' => $_POST['municipio'] ?? '', 'entidadFederativa' => $_POST['entidadFederativa'] ?? '', 'cp' => $_POST['cp'] ?? '', 'domicilio' => $_POST['domicilio'] ?? '',
@@ -79,6 +84,7 @@ class RegistroController
         $imagenDerecho = $_FILES['fotoDerecho'];
         $imagenChild =$_FILES['fotoChild'];
         $imagenCon =$_FILES['fotoCon'] ?? [];
+        $imgAutorizada = $_FILES['imgAutorizada'];
     
 
         //Sentencias para la bd
@@ -89,9 +95,11 @@ class RegistroController
       //Renombrar las fotos
       $fotoChild = $boleta . ".jpg";
       $fotoDerecho = $curpD . ".jpg";
+      $fotoAutorizada = $curpD . "Au.jpg";
       //El archivo que se va a subir y en donde se va a guardar
       move_uploaded_file($imagenDerecho['tmp_name'], $carpeta . $fotoDerecho);
       move_uploaded_file($imagenChild['tmp_name'], $carpeta . $fotoChild);
+      move_uploaded_file($imgAutorizada['tmp_name'], $carpeta . $fotoAutorizada);
 
       //Guardamos las imagenes
        $childBD->addImage($fotoChild, $sentencia);
@@ -106,10 +114,9 @@ class RegistroController
         $fotoCon = $curpD . "Con.jpg";
         move_uploaded_file($imagenCon['tmp_name'], $carpeta . $fotoCon);
         $conyugueBD->addImage($fotoCon, $sentencia) ;
-        $conyugueBD->some($sentencia);
-
+        
         //Crear pdf con el conyugue
-       $pdf = new Pdf($derechoRegistro, $childRegistro,  $conyugueBD);
+       $pdf = new Pdf($derechoRegistro, $childRegistro,  $conyugueBD->some($sentencia));
     }else{
 
         //Crear pdf sin el conyugue
@@ -120,7 +127,7 @@ class RegistroController
 
         //Envio de correo
          //Enviamos el correo al que se va a enviar y el nombre de la persona
-         $mail = new Email($derechoRegistro[0]->correo, $derechoRegistro[0]->nombre, $childRegistro[0]->boleta);
+         $mail = new Email($derechoRegistro[0]->correo, $derechoRegistro[0]->nombre, $childRegistro[0]->boleta, $childRegistro[0]->grupo);
 
          //Se envia el correo
          $mail->enviarPdf();
@@ -130,5 +137,12 @@ class RegistroController
         
       
     }
+
+    //Traernos los grupos de la bd
+    public static function grupos(){
+        $grupos = Grupos::all();
+        echo json_encode($grupos);
+    }
+  
     
 }

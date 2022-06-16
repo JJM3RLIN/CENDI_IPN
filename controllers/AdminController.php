@@ -7,6 +7,22 @@ use Models\Derechohabiente;
 use MVC\Router;
 class AdminController{
 
+  public static function verDatos(Router $render){
+
+    $curp =$_GET['curp'];
+    $sentenciaDerecho = "curp='" . $curp . "'";
+    $sentencia = "curpD='" . $curp . "'";
+
+    $derechoHabiente = new Derechohabiente;
+    $child = new Child;
+    $conyugue = new Conyu;
+
+    $derechoBD = $derechoHabiente->some($sentenciaDerecho)[0];
+    $childBD = $child->some($sentencia)[0];
+    $conyuBd = $conyugue->some($sentencia)[0] ?? null;
+    $render->render('admin/ver', ["derecho"=>$derechoBD, "child"=>$childBD, "conyu"=>$conyuBd]);
+  }
+
   public static function updateRender(Router $router){
 
     //Actualizacion de imagenes
@@ -101,6 +117,9 @@ class AdminController{
         unlink(__DIR__ . '/../fotos/' . $childBoleta->boleta . '.jpg');
         //Padre
         unlink(__DIR__ . '/../fotos/' . $curp . '.jpg');
+
+        //Persona autorizada
+        unlink(__DIR__ . '/../fotos/' . $curp . 'Au.jpg');
         //Le mandamos una respuesta el front
         echo json_encode(['respuestaB' => 1]);
     }
@@ -133,12 +152,12 @@ class AdminController{
     'telefono' => $_POST['telefono'] ?? '',  'lugarTrabajo' => $_POST['lugarTrabajo'] ?? '', 'domicilioTrabajo' => $_POST['domicilioTrabajo'] ?? '',
     'telTrabajo' => $_POST['tel_trabajo'] ?? '', 'extencion' => $_POST['extensionCO'] ?? '', 'curpD' => $_POST['curpD'] ?? ''
 ];
-/*$conyugueBD = new Conyu($conyugue);
+$conyugueBD = new Conyu($conyugue);
 if($_POST['tieneCon'] == '1'){
 
   //Si lo tiene lo añadimos a la bd
      $conyugueBD->update( $sentencia);
- }*/
+ }
 
  echo json_encode(["respuesta" => 1]);
   

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     agregarEstados();
     agregarEscuelas();
     mostrarConyugue();
-
+    traerGrupos();
     //Menu responsive
     mobileMenu();
 

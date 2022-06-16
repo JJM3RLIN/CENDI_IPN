@@ -22,6 +22,10 @@ try {
     const respuesta = await resultado.json();
     if(respuesta.respuestaB == '1'){
         alertaTop('Se elimino correctamente al derechoHabiente', 'success');
+        //Recargar la pagina
+        setTimeout(() => {
+            location.href('/admin');
+           }, 2000);
     }
     
 } catch (error) {

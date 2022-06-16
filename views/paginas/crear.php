@@ -1,18 +1,18 @@
-<main class="grid place-items-center p-2">
+<main class="grid place-items-center  p-2">
     <h1 class="titulo font-bold text-center text-2xl md:text-3xl my-2 uppercase text-gray-600">Formulario para la ficha de inscripción-reinscripción</h1>
     <h2 class="md:text-2xl text-xl text-gray-600 mb-4">Ciclo escolar: <span class="font-bold text-red-800 ">2022-2023</span></h2>
     <?php require __DIR__  . '/../../includes/templates/paginacion.php';?>
     <form action="" method="POST" class="form bg-white p-12 rounded-md shadow-md" enctype="multipart/form-data">
        <?php require __DIR__  . '/../../includes/templates/form.php';?>
-        <div>
+        <div class="overflow-hidden">
             <button id="validar" class="bg-red-700 rounded text-white p-2 mt-3 w-full uppercase hover:bg-red-900 hidden" type="button">Registrar</button>
             <button id="limpiar" class="bg-red-700 rounded text-white p-2 mt-3 w-full uppercase hover:bg-red-900" type="reset">Limpiar</button>
         </div>
     </form>
 
-    <section id="resumen" class="hidden">
+    <section id="resumen" class="hidden bg-white p-12 rounded-md shadow-md">
 
-   <div class="resumenDatos grid grid-cols-1 md:grid-cols-2 ">
+   <div class="resumenDatos grid grid-cols-1 md:grid-cols-2 gap-6 opacity-100 ">
    <section>
    <h2>Datos del Niño</h2>
     <p>Apellido Paterno: <span class="text-indigo-800" id="apellidoPC"></span></p>
@@ -64,15 +64,15 @@
  
 </section>
    </div>
-<div>
-<button class="modificar">Modificar</button>
-<button id="subirDatos" class="bg-red-700 rounded text-white p-2 mt-3 w-full uppercase hover:bg-red-900" type="button">Confirmar</button>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+<button class="modificar bg-red-700 text-white p-2 mt-3 w-full uppercase hover:bg-red-900 hover:drop-shadow-xl rounded ease-in-out duration-300 " type="button">Modificar</button>
+<button id="subirDatos" class="bg-green-700  text-white p-2 mt-3 w-full uppercase hover:bg-green-900 hover:drop-shadow-xl rounded ease-in-out duration-300 " type="button">Confirmar</button>
 </div>
 </section>
 
-<section class="fotos m-3 hidden">
+<section class="fotos w-screen justify-center items-center  m-3  absolute bg-black/40 top-0 left-0 right-0 bottom-0 hidden">
     
-  <form action="/usuarios/fotos" method="POST" enctype="multipart/form-data" class="formFotos bg-white p-12 rounded-md shadow-md">
+  <form action="/usuarios/fotos" method="POST" enctype="multipart/form-data" class="formFotos opacity-0 transition-all  ease-in-out bg-white p-12 rounded-md shadow-md">
   <h2 class="font-bold text-2xl">Para finalizar agrega las fotos correspondientes</h2>   
 <?php require __DIR__ . '../../../includes/templates/formFotos.php' ?>
   </form>

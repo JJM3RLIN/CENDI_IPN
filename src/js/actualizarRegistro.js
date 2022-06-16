@@ -54,15 +54,19 @@ function mostrarValores({child, derecho, conyu}){
        document.querySelector("#edad").value = child.edad;
        childDatos.edad = child.edad;
        document.querySelector("#curp").value = child.curp;
+       document.querySelector("#curp").disabled = true;
        childDatos.curpC = child.curp;
        //curp padre
        childDatos.curpD = child.curpD;
        document.querySelector("#cendi").value = child.cendi;
        childDatos.cendi = child.cendi;
        document.querySelector("#boleta").value = child.boleta;
+       document.querySelector("#boleta").disabled = true;
        childDatos.boleta = child.boleta;
-       document.querySelector("#grupo").value = child.grupo;
+       //Seleccionar el grupo
        childDatos.grupo = child.grupo;
+      agregarGrupoActu(child.grupo)
+
 
     //DerechoHabiente
        document.querySelector("#pApellidoD").value = derecho.apellidoP;
@@ -88,6 +92,7 @@ function mostrarValores({child, derecho, conyu}){
        document.querySelector("#ocupacion").value = derecho.ocupacion;
        derechoHabienteDatos.ocupacion = derecho.ocupacion;
        document.querySelector("#curpDE").value = derecho.curp;
+       document.querySelector("#curpDE").disabled = true;
        derechoHabienteDatos.curp = derecho.curp;
        document.querySelector("#puesto").value = derecho.puesto;
        derechoHabienteDatos.puesto = derecho.puesto;
@@ -98,7 +103,7 @@ function mostrarValores({child, derecho, conyu}){
 
        //Verificar si es superior o medio superior
        derechoHabienteDatos.adscripcion = derecho.adscripcion;
-       let tipoAd =  derecho.adscripcion.includes('CECYT') ? 'medioSuperior' : 'superior';
+       let tipoAd =  derecho.adscripcion.includes('CECYT') || derecho.adscripcion.includes('CET') ? 'medioSuperior' : 'superior';
        document.querySelector('#tipoEscuela').value = tipoAd;
        agregarEscuelasActu(tipoAd, derecho.adscripcion);
        document.querySelector("#horaTrabajo").value = derecho.horarioTrabajo;
@@ -109,10 +114,16 @@ function mostrarValores({child, derecho, conyu}){
        //Conyugue
        if(conyu === 0){
         document.querySelector("#rNo").checked = true;
+        //Presentar btn
+        const formFotos = document.querySelector('.formFotos');
+       const div = document.createElement('DIV');
+        div.innerHTML = `<button class="bg-red-800 cursor-pointer px-3 py-2 hover:bg-red-900 text-white font-bold w-full mt-3 text-xl" type="submit">Actualizar fotos</button>`;
+        formFotos.appendChild(div);
        }else{
         document.querySelector("#rSi").checked = true;
+        console.log(conyu)
         //Aparecer btn y foto del conyugue
-        mostrarFotoConyugue();
+        mostrarFotoConyugue(true);
         document.querySelector("[data-paso='3']").classList.remove('hidden');
         //Mostrar info del conyugue
      document.querySelector('#nombreCon').value = conyu.nombre;
@@ -204,6 +215,18 @@ async function agregarEscuelasActu(tipo, adscripcion){
     
   }
 
+  async function agregarGrupoActu(grupo){
+    try {
+      const url = '/grupos';
+    const peticion = await fetch(url);
+    const respuesta = await peticion.json();
+    crearOptionGrupos(respuesta);
+    const select = document.querySelector('#grupo').value = grupo;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 function tipoActualizacion(){
   const btnDatos = document.querySelector('#btnDatos');
   const btnFotos = document.querySelector('#btnFotos');
@@ -217,7 +240,7 @@ function tipoActualizacion(){
       formFotos.classList.add('hidden');
      //Desmarcar el btn de las fotos
     btnFotos.classList.remove('text-white');
-    btnFotos.classList.remove('bg-orange-700');
+    btnFotos.classList.remove('bg-orange-800');
     btnFotos.classList.add('bg-transparent');
     btnFotos.classList.add('text-orange-700');
 
@@ -226,7 +249,7 @@ function tipoActualizacion(){
 
     }
     btnDatos.classList.add('bg-amber-600');
-    btnDatos.classList.remove('text-amber-600');
+    btnDatos.classList.remove('text-amber-700');
   })
   btnFotos.addEventListener('click', ()=>{
     formDatos.classList.add('hidden');
@@ -234,12 +257,12 @@ function tipoActualizacion(){
 
     //Marcar el btn de las fotos
     btnFotos.classList.add('text-white');
-    btnFotos.classList.add('bg-orange-700');
+    btnFotos.classList.add('bg-orange-800');
     btnFotos.classList.remove('bg-transparent');
     btnFotos.classList.remove('text-orange-700');
    //Desmarcar el btn de datos
    btnDatos.classList.add('bg-transparent');
-   btnDatos.classList.add('text-amber-600');
+   btnDatos.classList.add('text-amber-700');
    btnDatos.classList.remove('bg-amber-600');
    btnDatos.classList.remove('text-white');
 

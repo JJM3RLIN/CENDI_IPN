@@ -4,7 +4,7 @@ let paso = 1;
 function formulario() {
   const btnValidar = document.querySelector('#validar');
  
-  //Es poque el formulario ya se muestra
+  //Es porque el resumen existe 
     if(btnValidar){
       btnValidar.addEventListener('click', ()=>validarForm())
 
@@ -145,9 +145,10 @@ function mostrarConyugue(){
          if(infoConyugue){
          infoConyugue.classList.remove('hidden');
          //Mostrar tres columnas en el resumen
-         if(document.querySelector('.resumenDatos').classList.contains('grid-cols-2')){
-          document.querySelector('.resumenDatos').classList.add('grid-cols-2')
-          document.querySelector('.resumenDatos').classList.add('grid-cols-3')
+         if(document.querySelector('.resumenDatos').classList.contains('md:grid-cols-2')){
+          console.log('tiene')
+          document.querySelector('.resumenDatos').classList.remove('md:grid-cols-2')
+          document.querySelector('.resumenDatos').classList.add('md:grid-cols-3')
          }
 
            //Crear la foto para el conyuge
@@ -158,7 +159,7 @@ function mostrarConyugue(){
         infoConyugue.classList.add('hidden');
         const formFotos = document.querySelector('.formFotos');
        const div = document.createElement('DIV');
-     div.innerHTML = `<button type="submit">Subir fotos</button>`;
+     div.innerHTML = `<button  class="bg-red-700 cursor-pointer px-3 py-2 hover:bg-red-900 text-white font-bold w-full mt-3 text-xl" type="submit">Subir fotos</button>`;
      formFotos.appendChild(div);
       }
       
@@ -166,12 +167,39 @@ function mostrarConyugue(){
   })
 
 }
-function mostrarFotoConyugue(){
+function mostrarFotoConyugue(actualizar){
   const formFotos = document.querySelector('.formFotos');
   const div = document.createElement('DIV');
   div.innerHTML = ` <label class="text-gray-600 font-semibold text-lg" for="imgCon">Foto del Conyugue</label>
   <input class="block w-full " type="file" accept="image/jpeg, image/png" id="imgCon" name="fotoCon">
-  <button type="submit">Subir fotos</button>
+  <button class="bg-red-700 cursor-pointer px-3 py-2 hover:bg-red-900 text-white font-bold w-full mt-3 text-xl" type="submit">${actualizar ? 'Actualizar' : 'Subir'} fotos</button>
   `;
   formFotos.appendChild(div);
+}
+
+//Grupos
+async function traerGrupos(){
+  try {
+    const url = '/grupos';
+  const peticion = await fetch(url);
+  const respuesta = await peticion.json();
+  crearOptionGrupos(respuesta);
+  } catch (error) {
+    console.log(error);
+  }
+}
+function crearOptionGrupos(grupos){
+  const select = document.querySelector('#grupo');
+  //Limpio el select
+  select.innerHTML = ' <option selected disabled>--Selecciona un grupo--</option>';
+  grupos.forEach(grupo=>{
+    const {nombre, cupo} = grupo
+    const option = document.createElement('OPTION');
+    option.value = nombre;
+    option.textContent = nombre;
+    if(Number(cupo) === 0){
+      option.disabled = true;
+    }
+    select.appendChild(option);
+  })
 }
