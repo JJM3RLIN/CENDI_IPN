@@ -187,8 +187,8 @@ try {
       alerta('Se actualizo correctamente la información', 'success');
       //redireccionamos
      setTimeout(() => {
-      location.href('/admin');
-     }, 2000);
+      window.location.assign("/admin");
+     }, 1000);
     } 
     
 } catch (error) {

@@ -1,5 +1,5 @@
 
-<nav class="">
+<nav >
     <div class="px-10 py-3" >
         <div class="flex items-center justify-between">
             <div class="inset-y-0 left-0 flex items-center md:hidden">

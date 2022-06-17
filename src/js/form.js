@@ -191,6 +191,7 @@ async function traerGrupos(){
 function crearOptionGrupos(grupos){
   const select = document.querySelector('#grupo');
   //Limpio el select
+ if(select){
   select.innerHTML = ' <option selected disabled>--Selecciona un grupo--</option>';
   grupos.forEach(grupo=>{
     const {nombre, cupo} = grupo
@@ -201,5 +202,7 @@ function crearOptionGrupos(grupos){
       option.disabled = true;
     }
     select.appendChild(option);
-  })
+  }) 
+}
+ 
 }

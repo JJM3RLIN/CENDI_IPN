@@ -21,8 +21,8 @@ $admin = $_SESSION['usuario'];
         </thead>
         <tbody>
         <?php foreach ($registros as  $registro): ?>
-            <tr >
-                <td class="borderborder-slate-600 md:py-2 md:px-3 md:text-lg p-1 text-xs " ><p><?php echo $registro->apellidoP . ' ' . $registro->apellidoM . " " . $registro->nombre ?></p></td>
+            <tr class="border-orange-700">
+                <td class="border border-orange-700 md:py-2 md:px-3 md:text-lg p-1 text-xs " ><p><?php echo $registro->apellidoP . ' ' . $registro->apellidoM . " " . $registro->nombre ?></p></td>
                 <td class="border border-orange-700 md:py-2 md:px-3 md:text-lg p-1 text-xs " ><?php echo $registro->curp; ?></td>
             <td class="border border-orange-700 md:py-2 md:px-3 md:text-lg p-1 text-xs" ><?php echo $registro->nEmpleado; ?></td>
             <td class="border border-orange-700 md:py-2 md:px-3 md:text-lg p-1 text-xs" ><?php echo $registro->adscripcion; ?></td>

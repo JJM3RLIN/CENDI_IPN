@@ -17,7 +17,7 @@
         <div class="container px-5 py-2 mx-auto">
                 <h1 class=" text-center my-10 text-3xl md:text-6xl mt-10 text-gray-800 font-semibold">Nuestras instalaciones</h1>
            
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <div class="p-4">
                     <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                         <img class="lg:h-72 md:h-48 w-full object-cover object-center"

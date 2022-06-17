@@ -29,7 +29,7 @@ echo $errores;
                        $admin->autenticar();
                       
                    }else{
-                       $errores = Admin::F();
+                       $errores = Admin::getErrores();
                    }
                }
                

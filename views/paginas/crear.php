@@ -70,7 +70,7 @@
 </div>
 </section>
 
-<section class="fotos w-screen justify-center items-center  m-3  absolute bg-black/40 top-0 left-0 right-0 bottom-0 hidden">
+<section class="fotos w-screen h-screen justify-center items-center  absolute bg-black/40 top-0 left-0 right-0 bottom-0 hidden">
     
   <form action="/usuarios/fotos" method="POST" enctype="multipart/form-data" class="formFotos opacity-0 transition-all  ease-in-out bg-white p-12 rounded-md shadow-md">
   <h2 class="font-bold text-2xl">Para finalizar agrega las fotos correspondientes</h2>   

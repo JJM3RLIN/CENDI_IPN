@@ -112,6 +112,7 @@ class ActiveRecord
     public  function delete($sentencia)
     {
         $query = 'DELETE FROM' . ' ' . static::$tabla . " WHERE  " . $sentencia;
+        
         $resultado = self::$db->query($query);
         return $resultado;
     }

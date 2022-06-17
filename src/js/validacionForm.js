@@ -151,8 +151,13 @@ function guardarInfoChild() {
     resumen.fNacimiento = e.target.value;
   });
   edadF.addEventListener("change", (e) => {
-    childDatos.edad = e.target.value;
-    resumen.edad = e.target.value;
+    if(Number(e.target.value) > 6){
+      mostrarAlertErrorCampo("El niño es demasiado grande", e.target.parentElement);
+    }else{
+      childDatos.edad = e.target.value;
+      resumen.edad = e.target.value;
+    }
+   
   });
   curpF.addEventListener("change", (e) => {
     if (!validarCurp(e.target.value)) {
@@ -206,8 +211,13 @@ function guardarInfoDerecho() {
     }
   });
   nombre.addEventListener("change", (e) => {
-    derechoHabienteDatos.nombre = e.target.value;
+    if (validarTexto(e.target.value)) {
+      mostrarAlertErrorCampo("No debe contener números", e.target.parentElement);
+    }else{
+      derechoHabienteDatos.nombre = e.target.value;
     resumen.nombre = e.target.value;
+    }
+    
   });
   domicilio.addEventListener("change", (e) => {
     derechoHabienteDatos.domicilio = e.target.value;
@@ -225,17 +235,33 @@ function guardarInfoDerecho() {
     resumen.entidadFederativa = e.target.options[entidadFederativa.selectedIndex].innerText;
   });
   cp.addEventListener("change", (e) => {
+  if( validarLong(e.target.value, 5)){
+    mostrarAlertErrorCampo("Demasiado largo", e.target.parentElement);
+  }else{
     derechoHabienteDatos.cp = e.target.value;
     //conyuDatos.cp = e.target.value;
     resumen.cp = e.target.value;
+  }
+    
   });
   tel_f.addEventListener("change", (e) => {
-    derechoHabienteDatos.tel_F = e.target.value;
-    resumen.tel_F = e.target.value;
+    if( validarLong(e.target.value, 10)){
+      mostrarAlertErrorCampo("Demasiado largo",  e.target.parentElement.parentElement.parentElement);
+    }else{
+      derechoHabienteDatos.tel_F = e.target.value;
+      resumen.tel_F = e.target.value;
+    }
+    
   });
   tel_c.addEventListener("change", (e) => {
+
+    if( validarLong(e.target.value, 10)){
+      mostrarAlertErrorCampo("Demasiado largo",  e.target.parentElement.parentElement.parentElement);
+    }
+   else{
     derechoHabienteDatos.tel_C = e.target.value;
     resumen.tel_C = e.target.value;
+   }
   });
   correo.addEventListener("change", (e) => {
     derechoHabienteDatos.correo = e.target.value;
@@ -317,13 +343,23 @@ function guardarInfoConyugue(){
     }
   });
   tel_f.addEventListener('change', e=>{
-    conyuDatos.telefono = e.target.value;
-    resumen.telefono = e.target.value;
+    if( validarLong(e.target.value, 10)){
+      mostrarAlertErrorCampo("Demasiado largo",  e.target.parentElement.parentElement.parentElement);
+    }else{
+      conyuDatos.telefono = e.target.value;
+      resumen.telefono = e.target.value;
+    }
+  
   });
 
   telTrabajo.addEventListener('change', e=>{
+    if( validarLong(e.target.value, 10)){
+      mostrarAlertErrorCampo("Demasiado largo",  e.target.parentElement.parentElement.parentElement);
+    }
+  else{
     conyuDatos.tel_trabajo = e.target.value;
     resumen.tel_trabajo = e.target.value;
+  }
   });
   lugarTrabajo.addEventListener('change', e=>{
     conyuDatos.lugarTrabajo = e.target.value;
@@ -543,7 +579,7 @@ async function subirDatos(){
 function mostrarModalFotos(){
   const formFotos = document.querySelector('.fotos');
   const formAparecer = document.querySelector('.formFotos')
-  const body = document.getElementsByTagName('body');
+  const body = document.querySelector('#body');
   //Mostrar el form de fotos
 formFotos.classList.remove('hidden');
 formFotos.classList.add('flex');
@@ -560,6 +596,13 @@ function validarCurp(curp) {
 function validarTexto(txt) {
   const regex = /[0-9]/;
   return regex.test(txt);
+}
+function validarLong(txt, longitud) {
+  const long = txt.length;
+  if(long > longitud){
+    return true;
+  }
+  return false
 }
 function mostrarAlertErrorCampo(mensaje, padre) {
   const divAlerta = document.createElement("P");

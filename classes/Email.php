@@ -10,12 +10,12 @@ class Email
     public $nombre;
     public $nombrePdf;
     public $grupo;
-    public function __construct($email, $nombre, $pdf, $grupo)
+    public function __construct($email, $nombre, $pdf, $grupo = '')
     {
         $this->email = $email;
         $this->nombre = $nombre;
         $this->nombrePdf = $pdf;
-        $this->grupo = $grupo;
+        $this->grupo = $grupo ?? '';
     }
     public function enviarPdf()
     {

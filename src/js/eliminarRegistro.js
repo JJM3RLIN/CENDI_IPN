@@ -12,7 +12,8 @@ function eliminarRegistro(){
 async function eliminar(e){
 const form = new FormData();
 
-form.append('curp', e.target.id);
+form.append('curp', e.target.parentElement.id);
+
 try {
     const url = '/admin/eliminar';
     const resultado = await fetch(url, {
@@ -22,10 +23,9 @@ try {
     const respuesta = await resultado.json();
     if(respuesta.respuestaB == '1'){
         alertaTop('Se elimino correctamente al derechoHabiente', 'success');
-        //Recargar la pagina
         setTimeout(() => {
-            location.href('/admin');
-           }, 2000);
+            window.location.assign("/admin");
+        }, 1000);
     }
     
 } catch (error) {

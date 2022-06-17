@@ -21,8 +21,8 @@ $registrado = $_GET['tipo'] ?? '';
     <link rel="stylesheet" href="/styles/final.css">
 </head>
 
-<body class="bg-slate-50">
-    <header class="bg-red-900 text-white  <?php echo $_SERVER['REQUEST_URI'] == '/' ? '' : 'mb-4' ?> <?php echo $_SERVER['REQUEST_URI'] != '/login' ? 'block' : 'hidden' ?>">
+<body id="body" class="bg-slate-50">
+    <header class="bg-red-900 text-white  <?php echo $_SERVER['REQUEST_URI'] === '/' ? '' : 'mb-4' ?> <?php echo $_SERVER['REQUEST_URI'] != '/login' ? 'block' : 'hidden' ?>">
     <?php include __DIR__ . '/../includes/templates/nav.php'; ?>
     </header>
 

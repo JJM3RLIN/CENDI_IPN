@@ -65,15 +65,15 @@ public function __construct($dereBD, $childBD, $conyuBD = [])
     $pdf->Cell(62,5,'Primer apellido',1,0,'C');
     $pdf->Cell(64,5,'Segundo apellido',1,0,'C');
     $pdf->Cell(62,5,'Nombre(s)',1,1,'C');
-    $pdf->Cell(44,5,'Fecha de nacimiento:',1,0,'C');
-    $pdf->Cell(9,5,$this->child->fechaNacimiento,1,0,'C',1);//Dia
+    $pdf->Cell(45,5,'Fecha de nacimiento:',1,0,'C');
+    $pdf->Cell(20,5,$this->child->fechaNacimiento,1,0,'C',1);//Dia
    
     $pdf->Cell(14,5,'Edad:',1,0,'C');
     $pdf->Cell(13,5,utf8_decode('Años:'),1,0,'C');
     $pdf->Cell(16,5,$this->child->edad,1,0,'C',1); //Años
   
     $pdf->Cell(18,5,'CURP:',1,0,'C');
-    $pdf->Cell(64,5,$this->child->curp,1,1,'C',1);//CURP
+    $pdf->Cell(62,5,$this->child->curp,1,1,'C',1);//CURP
 
     $pdf->Ln(5);
     $pdf->Cell(23);
@@ -139,22 +139,22 @@ public function __construct($dereBD, $childBD, $conyuBD = [])
   $pdf->Cell(164,5,utf8_decode($this->conyugue->domicilio),1,1,'C',1);//Aqui va el domicilio
   $pdf->Cell(24,5,'particular:','LB',0,'C');
   $pdf->Cell(164,5,utf8_decode('Calle, N° Ext. N° Int. Colonia :'),1,1,'C');
-  $pdf->Cell(50,5,utf8_decode($this->conyugue->municipio),1,0,'C',1);//Alcaldia o municipio
-  $pdf->Cell(56,5,utf8_decode($this->conyugue->entidadFederativa),1,0,'C',1);//Entidad federativa
-  $pdf->Cell(14,5,$this->conyugue->cp,1,0,'C',1);//CP
-  $pdf->Cell(34,5,$this->conyugue->telefono,1,0,'C',1);//Telefono fijo
-  $pdf->Cell(50,5,'Alcaldia o Municipio:',1,0,'C');
-  $pdf->Cell(56,5,'Entidad Federativa:',1,0,'C');
-  $pdf->Cell(14,5,'C.P.:',1,0,'C');
-  $pdf->Cell(34,5,utf8_decode('Teléfono fijo:'),1,0,'C');
-  $pdf->Cell(40,5,'Lugar de trabajo:',1,0,'C');
-  $pdf->Cell(60,5,utf8_decode($this->conyugue->lugarTrabajo),1,0,'C',1);//Lugar de trabajo
-  $pdf->Cell(34,5,utf8_decode('Ocupación:'),1,0,'C');
-  $pdf->Cell(54,5,$this->conyugue->ocupacion,1,1,'C',1);//Ocupacion
+  $pdf->Cell(70,5,utf8_decode($this->conyugue->municipio),1,0,'C',1);//Alcaldia o municipio
+  $pdf->Cell(60,5,utf8_decode($this->conyugue->entidadFederativa),1,0,'C',1);//Entidad federativa
+  $pdf->Cell(20,5,$this->conyugue->cp,1,0,'C',1);//CP
+  $pdf->Cell(38,5,$this->conyugue->telefono,1,1,'C',1);//Telefono fijo
+  $pdf->Cell(70,5,'Alcaldia o Municipio:',1,0,'C');
+  $pdf->Cell(60,5,'Entidad Federativa:',1,0,'C');
+  $pdf->Cell(20,5,'C.P.:',1,0,'C');
+  $pdf->Cell(38,5,utf8_decode('Teléfono fijo:'),1,1,'C');
+  $pdf->Cell(35,5,'Lugar de trabajo:',1,1,'C');
+  $pdf->Cell(73,5,utf8_decode($this->conyugue->lugarTrabajo),1,0,'C',1);//Lugar de trabajo
+  $pdf->Cell(28,5,utf8_decode('Ocupación:'),1,0,'C');
+  $pdf->Cell(52,5,$this->conyugue->ocupacion,1,1,'C',1);//Ocupacion
   $pdf->Cell(44,5,utf8_decode('Domicilio del trabajo:'),1,0,'C');
   $pdf->Cell(144,5,utf8_decode($this->conyugue->domicilioTrabajo),1,1,'C',1);//Domicilio de trabajo 
   $pdf->Cell(40,5,utf8_decode('Telefóno del trabajo:'),1,0,'C');
-  $pdf->Cell(54,5,$this->conyugue->telTrabajo,1,0,'C',1);//Telefono del trabajo 
+  $pdf->Cell(54,5,$this->conyugue->telTrabajo,1,1,'C',1);//Telefono del trabajo 
  }
  $pdf->SetFont('Arial','',8);
     //Cambiar las siguientes dos lineas con la direccion del cendi
@@ -167,7 +167,7 @@ public function __construct($dereBD, $childBD, $conyuBD = [])
     $fotoAutorizado = '../fotos/' . $this->derechoHabiente->curp . 'Au.jpg';
     if(!empty($this->conyugue)){
       $pdf->Cell(60,5,utf8_decode('FOTOGRAFIAS DEL O LA DERECHOHABIENTE, CÓNYUGE (PADRE, MADRE) Y PERSONA AUTORIZADA PARA RECOGER AL NIÑO O A LA NIÑA'),0,1);
-      $pdf->Image($fotoDerecho,90,20,25,30, 'JPG');
+      $pdf->Image($fotoDerecho,40,20,25,30, 'JPG');
       $fotoConyugue ='../fotos/' . $this->derechoHabiente->curp . 'Con.jpg';
       $pdf->Image($fotoConyugue,90,20,25,30, 'JPG');
       $pdf->Image($fotoAutorizado,140,20,25,30, 'JPG');
@@ -182,18 +182,19 @@ public function __construct($dereBD, $childBD, $conyuBD = [])
       $pdf->Cell(120);
       $pdf->Cell(45,5,utf8_decode('AUTORIZADA'),0,1,'C');
     }else{
+      $pdf->Ln(60);
       $pdf->Cell(60,5,utf8_decode('FOTOGRAFIAS DEL O LA DERECHOHABIENTE Y PERSONA AUTORIZADA PARA RECOGER AL NIÑO O A LA NIÑA'),0,1);
-      $pdf->Image($fotoDerecho,90,20,25,30, 'JPG');
-      $pdf->Image($fotoAutorizado,140,20,25,30, 'JPG');
+      $pdf->Image($fotoDerecho,40,20,25,30, 'JPG');
+      $pdf->Image($fotoAutorizado,90,20,25,30, 'JPG');
       $pdf->Ln(40);   
       $pdf ->SetFont('helvetica','B',10);
       $pdf->Cell(20);
       $pdf->Cell(45,5,utf8_decode('DERECHOHABIENTE'),0,0,'C');
     
       $pdf->Cell(5);
-      $pdf->Cell(45,5,utf8_decode('PERSONA'),0,1,'C');
-      $pdf->Cell(120);
-      $pdf->Cell(45,5,utf8_decode('AUTORIZADA'),0,1,'C');
+      $pdf->Cell(45,5,utf8_decode('PERSONA AUTORIZADA'),0,1,'C');
+      
+      
     }
    
    
